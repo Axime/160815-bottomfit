@@ -8,7 +8,7 @@ package {
 	
 	import launchers.Launcher_AA;
 	
-	[SWF(width = "1280", height = "720", backgroundColor = "0x0", frameRate = "60")]
+	[SWF(width = "450", height = "800", backgroundColor = "0x0", frameRate = "60")]
 public class Render_01____Node extends Sprite {
 	
 	public function Render_01____Node() {
@@ -18,7 +18,7 @@ public class Render_01____Node extends Sprite {
 //		logger_A = new FlashTextLogger(stage, false, 80, 465, 400, true);
 //		isDebugger = true;
 		logger_A = new DebugLogger;
-		Axime.startup(1024, 768, stage, Launcher_AA, logger_A, isDebugger);
+		Axime.startup(1080, 1920, stage, Launcher_AA, logger_A, isDebugger);
 	}
 }
 }

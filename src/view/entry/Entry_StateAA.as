@@ -37,7 +37,7 @@ public class Entry_StateAA extends StateAA {
 	}
 	
 	
-	private static const HOTSPOT_H:int = 30;
+	private static const HOTSPOT_H:int = 35;
 	
 	
 	
@@ -50,10 +50,10 @@ public class Entry_StateAA extends StateAA {
 		this.getFusion().addNode(img_A);
 		img_A.userData = tag;
 		
-//		img_A.scaleX = (Axime.getWindow().rootWidth / 3) / img_A.sourceWidth;
-//		img_A.scaleY = HOTSPOT_H / img_A.sourceHeight;
+		img_A.scaleX = (Axime.getWindow().rootWidth / 3) / img_A.sourceWidth;
+		img_A.scaleY = HOTSPOT_H / img_A.sourceHeight;
 		
-//		img_A.y = Axime.getWindow().rootHeight - 100;
+		img_A.y = Axime.getWindow().rootHeight - HOTSPOT_H;
 		
 		sg_A = GestureFacade.recognize(img_A, SwipeGestureRecognizer) as SwipeGestureRecognizer;
 		sg_A.addEventListener(AEvent.COMPLETE, onSwipe);
