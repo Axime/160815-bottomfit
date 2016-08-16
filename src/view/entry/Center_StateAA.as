@@ -60,9 +60,9 @@ public class Center_StateAA extends StateAA
 		_hotspotFN.addNode(img_A);
 		
 		img_A.scaleX = Axime.getWindow().rootWidth / img_A.sourceWidth;
-		img_A.scaleY = ViewConfig.HOTSPOT_H / img_A.sourceHeight * 4;
+		img_A.scaleY = ViewConfig.HOTSPOT_H2 / img_A.sourceHeight;
 		
-		img_A.y = -ViewConfig.HOTSPOT_H * 1.5;
+		img_A.y = -ViewConfig.HOTSPOT_H2 * 0.35;
 		
 		return img_A;
 	}

@@ -4,9 +4,12 @@ package view.entry {
 	import d2.axime.animate.TweenMachine;
 	import d2.axime.animate.easing.Back;
 	import d2.axime.animate.easing.Bounce;
+	import d2.axime.animate.easing.Circ;
 	import d2.axime.animate.easing.Cubic;
 	import d2.axime.animate.easing.Elastic;
 	import d2.axime.animate.easing.Linear;
+	import d2.axime.animate.easing.Quad;
+	import d2.axime.animate.easing.Strong;
 	import d2.axime.display.FusionAA;
 	import d2.axime.display.ImageAA;
 	import d2.axime.display.StateAA;
@@ -37,7 +40,7 @@ public class Entry_StateAA extends StateAA {
 		
 		if(v > MAX_VIEW_VALUE_LIMIT){
 			//trace(v);
-			_currStateFN.y = Axime.getWindow().rootHeight * ((1-MAX_VIEW_VALUE_LIMIT) - (v-MAX_VIEW_VALUE_LIMIT)*0.7);
+			_currStateFN.y = Axime.getWindow().rootHeight * ((1-MAX_VIEW_VALUE_LIMIT) - (v-MAX_VIEW_VALUE_LIMIT)*0.6);
 		}
 		else {
 			_currStateFN.y = Axime.getWindow().rootHeight * (1-v);
@@ -216,7 +219,8 @@ public class Entry_StateAA extends StateAA {
 		
 		// 向下
 		if(_currTouch.velocityY > 0){
-			tween = TweenMachine.to(this, 0.20, {value:0});
+			tween = TweenMachine.to(this, (_value + 1) * 0.16, {value:0});
+//			tween.easing = Strong.easeOut;
 			tween.easing = Linear.easeOut;
 			
 			tween.onComplete = function() :void{
@@ -226,9 +230,14 @@ public class Entry_StateAA extends StateAA {
 		}
 		
 		else {
-			tween = TweenMachine.to(this, 0.55, {value:MAX_VIEW_VALUE_LIMIT});
-			tween.easing = Bounce.easeOut;
-			
+			if(_value > MAX_VIEW_VALUE_LIMIT) {
+				tween = TweenMachine.to(this, 0.16 + (_value - MAX_VIEW_VALUE_LIMIT) * 0.55, {value:MAX_VIEW_VALUE_LIMIT});
+				tween.easing = Bounce.easeOut;
+			}
+			else{
+				tween = TweenMachine.to(this, 0.16 + (MAX_VIEW_VALUE_LIMIT - _value) * 0.5, {value:MAX_VIEW_VALUE_LIMIT});
+				tween.easing = Back.easeOut;
+			}
 			tween.onComplete = function() :void{
 				Axime.getWindow().getTouch().touchEnabled = true;
 			}
