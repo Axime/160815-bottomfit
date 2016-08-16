@@ -34,7 +34,7 @@ public class Res_ViewAA extends ViewAA {
 			
 //			g_AM.addBundle(new EmbeddedBundle(ResCoreUtil.ui),    new TextureAA_BundleHandler(1.0, false, false, "image"));
 			
-			filenameList = new <String>["img/frame.png"];
+			filenameList = new <String>["img/frame.png", "img/bg.png", "img/mask.png", "img/scale9_A.png", "img/tile_A.jpg"];
 			g_AM.addBundle(new FilesBundle(filenameList), new TextureAA_BundleHandler(1.0));
 		}
 		return g_AM;
