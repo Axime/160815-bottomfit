@@ -219,7 +219,7 @@ public class Entry_StateAA extends StateAA {
 		
 		// 向下
 		if(_currTouch.velocityY > 0){
-			tween = TweenMachine.to(this, (_value + 1) * 0.16, {value:0});
+			tween = TweenMachine.to(this, (_value + 1) * 0.14, {value:0});
 //			tween.easing = Strong.easeOut;
 			tween.easing = Linear.easeOut;
 			
@@ -235,7 +235,7 @@ public class Entry_StateAA extends StateAA {
 				tween.easing = Bounce.easeOut;
 			}
 			else{
-				tween = TweenMachine.to(this, 0.16 + (MAX_VIEW_VALUE_LIMIT - _value) * 0.5, {value:MAX_VIEW_VALUE_LIMIT});
+				tween = TweenMachine.to(this, 0.16 + (MAX_VIEW_VALUE_LIMIT - _value) * 0.45, {value:MAX_VIEW_VALUE_LIMIT});
 				tween.easing = Back.easeOut;
 			}
 			tween.onComplete = function() :void{
