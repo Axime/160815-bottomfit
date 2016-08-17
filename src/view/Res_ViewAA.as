@@ -34,7 +34,76 @@ public class Res_ViewAA extends ViewAA {
 			
 //			g_AM.addBundle(new EmbeddedBundle(ResCoreUtil.ui),    new TextureAA_BundleHandler(1.0, false, false, "image"));
 			
-			filenameList = new <String>["img/frame.png", "img/bg.png", "img/mask.png", "img/scale9_A.png", "img/tile_A.jpg"];
+			filenameList = new <String>[
+				"img/frame.png", 
+				"img/bg.png",
+				"img/maskA.png", 
+				"img/bgA.png", 
+				"img/tile_A.jpg",
+				"img/navi.png",
+				
+				// text
+				"text/bluetooth.png",
+				"text/calc.png",
+				"text/custom.png",
+				"text/flashlight.png",
+				"text/flymode.png",
+				"text/mobiledata.png",
+				"text/mute.png",
+				"text/rotate.png",
+				"text/scan.png",
+				"text/screenshot.png",
+				"text/shock.png",
+				"text/WLAN.png",
+				
+			];
+			
+			g_AM.addBundle(new FilesBundle(filenameList), new TextureAA_BundleHandler(1.0));
+			
+			filenameList = new <String>[
+				"btn1/flashlight.png", 
+				"btn1/flashlight1.png",
+				
+				"btn1/calc.png", 
+				"btn1/calc1.png",
+				
+				"btn1/scan.png", 
+				"btn1/scan1.png",
+				
+				"btn1/screenshot.png", 
+				"btn1/screenshot1.png",
+				
+				"btn/WLAN.png", 
+				"btn/WLAN1.png",
+				
+				"btn/bluetooth.png", 
+				"btn/bluetooth1.png",
+				
+				"btn/mobiledata.png", 
+				"btn/mobiledata1.png",
+				
+				"btn/flymode.png", 
+				"btn/flymode1.png",
+				
+				"btn/rotate.png", 
+				"btn/rotate1.png",
+				
+				"btn/shock.png", 
+				"btn/shock1.png",
+				
+				"btn/mute.png", 
+				"btn/mute1.png",
+				
+				"btn/custom.png", 
+				"btn/custom1.png",
+				
+				
+				"btn2/projection.png", 
+				"btn2/projection1.png",
+				
+				"btn2/upload.png", 
+				"btn2/upload1.png",
+			];
 			g_AM.addBundle(new FilesBundle(filenameList), new TextureAA_BundleHandler(1.0));
 		}
 		return g_AM;

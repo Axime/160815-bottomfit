@@ -77,8 +77,8 @@ public class Entry_StateAA extends StateAA {
 	
 	
 	private static const MAX_MASK_VALUE_LIMIT:Number = 0.55;
-	private static const MAX_MASK_ALPHA:Number = 0.55;
-	private static const MAX_VIEW_VALUE_LIMIT:Number = 0.75;
+	private static const MAX_MASK_ALPHA:Number = 1.0;
+	private static const MAX_VIEW_VALUE_LIMIT:Number = 0.585;
 	
 	
 	private var _bg:ImageAA;
@@ -103,11 +103,11 @@ public class Entry_StateAA extends StateAA {
 	
 	private function doMakeMask() : void {
 		_mask = new ImageAA;
-		_mask.textureId = "common/img/mask.png";
+		_mask.textureId = "common/img/maskA.png";
 		this.getFusion().addNode(_mask);
 		
-		_mask.scaleX = Axime.getWindow().rootWidth / _mask.sourceWidth;
-		_mask.scaleY = Axime.getWindow().rootHeight / _mask.sourceHeight;
+//		_mask.scaleX = Axime.getWindow().rootWidth / _mask.sourceWidth;
+//		_mask.scaleY = Axime.getWindow().rootHeight / _mask.sourceHeight;
 		
 		_mask.alpha = 0.0;
 	}

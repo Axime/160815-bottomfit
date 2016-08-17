@@ -9,6 +9,6 @@ package view
 		
 		
 		public static const HOTSPOT_H:int = 80;
-		public static const HOTSPOT_H2:int = 260;
+		public static const HOTSPOT_H2:int = 200;
 	}
 }
