@@ -1,4 +1,6 @@
 package view.entry {
+	import flash.ui.Keyboard;
+	
 	import d2.axime.Axime;
 	import d2.axime.animate.ATween;
 	import d2.axime.animate.TweenMachine;
@@ -17,6 +19,7 @@ package view.entry {
 	import d2.axime.enum.EDirection;
 	import d2.axime.enum.ETouchMode;
 	import d2.axime.events.AEvent;
+	import d2.axime.events.AKeyboardEvent;
 	import d2.axime.gesture.GestureFacade;
 	import d2.axime.gesture.SwipeGestureRecognizer;
 	import d2.axime.window.Touch;
@@ -40,7 +43,7 @@ public class Entry_StateAA extends StateAA {
 		
 		if(v > MAX_VIEW_VALUE_LIMIT){
 			//trace(v);
-			_currStateFN.y = Axime.getWindow().rootHeight * ((1-MAX_VIEW_VALUE_LIMIT) - (v-MAX_VIEW_VALUE_LIMIT)*0.6);
+			_currStateFN.y = Axime.getWindow().rootHeight * ((1-MAX_VIEW_VALUE_LIMIT) - (v-MAX_VIEW_VALUE_LIMIT)*0.55);
 		}
 		else {
 			_currStateFN.y = Axime.getWindow().rootHeight * (1-v);
@@ -49,6 +52,7 @@ public class Entry_StateAA extends StateAA {
 	}
 	
 	public function registerTouch(touch:Touch):void{
+		_showBottomFixed = false;
 		
 		_currTouch = touch;
 		_currTouch.addEventListener(AEvent.CHANGE, onTouchChanged);
@@ -62,6 +66,8 @@ public class Entry_StateAA extends StateAA {
 		this.doMakeBg();
 		this.doMakeMask();
 		this.doMakeHotspot();
+		
+		Axime.getWindow().getKeyboard().getKey(Keyboard.BACK).addEventListener(AEvent.COMPLETE, ____onKey_Back);
 	}
 	
 	override public function onExit() : void {
@@ -86,7 +92,7 @@ public class Entry_StateAA extends StateAA {
 	private var _value:Number = 0.0; // 0.0 ~ 1.0
 	
 	private var _currTouch:Touch;
-	
+	private var _showBottomFixed:Boolean;
 	
 	
 	private function doMakeBg() : void {
@@ -219,14 +225,7 @@ public class Entry_StateAA extends StateAA {
 		
 		// 向下
 		if(_currTouch.velocityY > 0){
-			tween = TweenMachine.to(this, (_value + 1) * 0.15, {value:0});
-//			tween.easing = Strong.easeOut;
-			tween.easing = Linear.easeOut;
-			
-			tween.onComplete = function() :void{
-				Axime.getWindow().getTouch().touchEnabled = true;
-				_currStateFN.touchable = _currStateFN.visible = false;
-			}
+			this.doHideBottom();
 		}
 		
 		else {
@@ -240,6 +239,9 @@ public class Entry_StateAA extends StateAA {
 			}
 			tween.onComplete = function() :void{
 				Axime.getWindow().getTouch().touchEnabled = true;
+				
+				
+				_showBottomFixed = true;
 			}
 		}
 		
@@ -247,7 +249,7 @@ public class Entry_StateAA extends StateAA {
 		
 	}
 	
-	public function doUpdateTouch(touch:Touch) : void {
+	private function doUpdateTouch(touch:Touch) : void {
 		var ratio:Number = (Axime.getWindow().rootHeight - touch.rootY) / Axime.getWindow().rootHeight;
 		
 		//		Axime.getLog().simplify("ratio: {0}", ratio); 
@@ -256,5 +258,27 @@ public class Entry_StateAA extends StateAA {
 		
 	}
 	
+	private function doHideBottom() : void{
+		var tween:ATween;
+		
+		tween = TweenMachine.to(this, (_value + 1) * 0.15, {value:0});
+		//			tween.easing = Strong.easeOut;
+		tween.easing = Linear.easeOut;
+		
+		tween.onComplete = function() :void{
+			Axime.getWindow().getTouch().touchEnabled = true;
+			_currStateFN.touchable = _currStateFN.visible = false;
+		}
+
+	}
+	
+	private function ____onKey_Back(e:AEvent):void{
+		if(!_showBottomFixed){
+			return;
+		}
+		
+		_showBottomFixed = false;
+		this.doHideBottom();
+	}
 }
 }

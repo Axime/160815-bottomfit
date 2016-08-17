@@ -1,4 +1,5 @@
 package launchers {
+	import flash.ui.Keyboard;
 	import flash.ui.Multitouch;
 	
 	import d2.axime.Axime;
@@ -35,6 +36,8 @@ public class Launcher_AA implements IAximeLauncher, IRootLauncher {
 //		stage.addChild(d);
 		
 //		Axime.getWindow().getStage().addChild(new Stats());
+		
+		Axime.getWindow().getKeyboard().getKey(Keyboard.BACK).setPreventDefault(true);
 		
 		AssetMachine.activate(SwfClassAssetConverter);
 		AssetMachine.activate(AtlasAssetConvert);
