@@ -56,6 +56,15 @@ public class Res_ViewAA extends ViewAA {
 				"text/shock.png",
 				"text/WLAN.png",
 				
+				// slider
+				"slider/auto.png",
+				"slider/auto1.png",
+				"slider/bar.png",
+				"slider/strip.png",
+				"slider/strip1.png",
+				"slider/sun.png",
+				"slider/text.png",
+				
 			];
 			
 			g_AM.addBundle(new FilesBundle(filenameList), new TextureAA_BundleHandler(1.0));

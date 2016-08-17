@@ -11,13 +11,14 @@ package view.comp
 	
 	public class Check_CompAA extends StateAA
 	{
-		public function Check_CompAA(texA:String, texB:String, texText:String, isSelected:Boolean = false, customTouch:Boolean = true)
+		public function Check_CompAA(texA:String, texB:String, texText:String, isSelected:Boolean, customTouch:Boolean, isTextHoriz:Boolean)
 		{
 			_texA = texA;
 			_texB = texB;
 			_texText = texText;
 			_isSelected = isSelected;
 			_customTouch = customTouch;
+			_isTextHoriz = isTextHoriz;
 		}
 		
 		override public function onEnter() : void{
@@ -35,7 +36,14 @@ package view.comp
 				
 				_textImg.pivotX = _textImg.sourceWidth / 2;
 				_textImg.pivotY = _textImg.sourceHeight / 2;
-				_textImg.y = 55 + 44;
+				
+				
+				if(_isTextHoriz){
+					_textImg.x = 94;
+				}
+				else {
+					_textImg.y = 99;
+				}
 			}
 			
 			
@@ -56,6 +64,8 @@ package view.comp
 		private var _rootCoordY:Number;
 		private var _touch:Touch;
 		private var _customTouch:Boolean;
+		private var _isTextHoriz:Boolean;
+		
 		
 		
 		private function onPress(e:NTouchEvent):void{
@@ -84,7 +94,7 @@ package view.comp
 			var inRange:Boolean;
 			
 			if(_customTouch) {
-				inRange = AMath.distance(_rootCoordX, _rootCoordY, _touch.rootX, _touch.rootY) < 300;
+				inRange = AMath.distance(_rootCoordX, _rootCoordY, _touch.rootX, _touch.rootY) < 330;
 			}
 			else {
 				inRange = this.getFusion().hitTestPoint(_touch.rootX, _touch.rootY);

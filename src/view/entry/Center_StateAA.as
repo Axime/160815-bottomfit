@@ -1,18 +1,25 @@
 package view.entry
 {
+	import flash.geom.Rectangle;
+	
 	import d2.axime.Axime;
+	import d2.axime.animate.TweenMachine;
 	import d2.axime.display.FusionAA;
 	import d2.axime.display.ImageAA;
 	import d2.axime.display.Scale9ImageAA;
 	import d2.axime.display.StateAA;
 	import d2.axime.display.StateFusionAA;
+	import d2.axime.display.core.NodeAA;
+	import d2.axime.display.ui.ProgressBarAA;
 	import d2.axime.events.AEvent;
 	import d2.axime.events.NTouchEvent;
 	import d2.axime.gesture.GestureFacade;
 	import d2.axime.gesture.SwipeGestureRecognizer;
+	import d2.axime.utils.AMath;
 	
 	import view.ViewConfig;
 	import view.comp.Check_CompAA;
+	import view.comp.DragFusion;
 	
 public class Center_StateAA extends StateAA
 {
@@ -21,13 +28,20 @@ public class Center_StateAA extends StateAA
 		_entryState = entryState;
 	}
 	
-	public static const MIDDLE_Y1:int = 451;
+	public static const MIDDLE_Y1:int = 346;
+	public static const MIDDLE_Y2:int = 451;
 	public static const BOTTOM_Y1:int = 742;
 	public static const BOTTOM_Y2:int = 963;
+	
+//	public var max_drag:Number;
+//	public var min_drag:Number;
+	
 
 	override public function onEnter():void {
 		var checkFN:StateFusionAA;
 		var img:ImageAA;
+		
+		
 		
 		// bg
 		img = new ImageAA;
@@ -74,18 +88,74 @@ public class Center_StateAA extends StateAA
 		
 		
 		// slider
+		img = new ImageAA;
+		img.textureId = "common/slider/sun.png";
+		this.getFusion().addNode(img);
+		img.x = 53;
+		img.y = MIDDLE_Y1 - img.sourceHeight / 2;
 		
+		
+		// progress bar
+		_pb_A = new ProgressBarAA();
+		_pb_A.setData(new <String>[
+			"common/slider/strip.png",
+			"common/slider/strip1.png"],1);
+		_pb_A.setBarStartOffset( -704, 0);
+//		pb_A.width = 600;
+		//		pb_A.height = 300;
+		_pb_A.clipRect = new Rectangle(1, 0, 704, 5);
+		
+		_pb_A.getRange().ratio = 0.6;
+		this.getFusion().addNode(_pb_A);
+		_pb_A.x = 144;
+		_pb_A.y = MIDDLE_Y1 - 1;
+		
+		
+//		TweenMachine.to(pb_A.getRange(), 3, {ratio:1.0});
+		
+		// slider dragbutton
+		_dragFN = new DragFusion;
+		this.getFusion().addNode(_dragFN);
+		img = new ImageAA;
+		img.textureId = "common/slider/bar.png";
+		_dragFN.addNode(img);
+		img.pivotX = img.sourceWidth/2;
+		img.pivotY = img.sourceHeight /2;
+		img.setCollisionMethod(function(x:Number,y:Number,node:NodeAA):Boolean{
+			
+//			trace(x,y);
+			
+			if(AMath.distance(0,0,x,y) < 95){
+				return true;
+			}
+			return false;
+		});
+		
+		_dragFN.x = 144 + 704 * 0.6;
+		_dragFN.y = MIDDLE_Y1 - 1;
+		
+		_dragFN.addEventListener(NTouchEvent.PRESS, onStartDrag);
+		
+		
+		
+		// auto button
+		checkFN = doCreateBtn("slider/auto.png", "slider/auto1.png", "slider/text.png", false, true, true);
+		checkFN.x = Axime.getWindow().rootWidth - 180;
+		checkFN.y = MIDDLE_Y1;
 		
 		
 		
 		// middle
 		checkFN = doCreateBtn("btn2/projection.png", "btn2/projection1.png", null, false, false);
 		checkFN.x = 240 + 48;
-		checkFN.y = 67 + MIDDLE_Y1;
+		checkFN.y = 67 + MIDDLE_Y2;
+		
+		
+		
 		
 		checkFN = doCreateBtn("btn2/upload.png", "btn2/upload1.png", null, false, false);
 		checkFN.x = 240 + 48 + 480 + 24;
-		checkFN.y = 67 + MIDDLE_Y1;
+		checkFN.y = 67 + MIDDLE_Y2;
 		
 		
 		
@@ -134,17 +204,17 @@ public class Center_StateAA extends StateAA
 	
 	private var _hotspotFN:FusionAA;
 	private var _entryState:Entry_StateAA;
+	private var _dragFN:DragFusion;
+	private var _pb_A:ProgressBarAA;
 	
 	
 	
-	
-	
-	private function doCreateBtn(texA:String, texB:String, texText:String = null, isSelected:Boolean = false, customTouch:Boolean = true):StateFusionAA {
+	private function doCreateBtn(texA:String, texB:String, texText:String = null, isSelected:Boolean = false, customTouch:Boolean = true, isTextHoriz:Boolean=false):StateFusionAA {
 		var stateFN:StateFusionAA;
 		
 		stateFN = new StateFusionAA;
 		this.getFusion().addNode(stateFN);
-		stateFN.setState(new Check_CompAA(texA, texB, texText, isSelected, customTouch));
+		stateFN.setState(new Check_CompAA(texA, texB, texText, isSelected, customTouch, isTextHoriz));
 		return stateFN;
 	}
 	
@@ -168,5 +238,19 @@ public class Center_StateAA extends StateAA
 		_entryState.registerTouch(e.touch);
 	}
 	
+	private function onStartDrag(e:NTouchEvent):void{
+		_dragFN.startDrag(e.touch, new Rectangle(144, MIDDLE_Y1 - 1, 704, 0));
+		
+		e.touch.addEventListener(AEvent.CHANGE, onDragChange);
+		e.touch.addEventListener(AEvent.COMPLETE, onDragComplete);
+	}
+	
+	private function onDragChange(e:AEvent):void{
+		_pb_A.getRange().ratio = (_dragFN.x - 144) / 704;
+	}
+	
+	private function onDragComplete(e:AEvent):void{
+		_dragFN.stopDrag();
+	}
 }
 }

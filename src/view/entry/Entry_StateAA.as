@@ -76,6 +76,8 @@ public class Entry_StateAA extends StateAA {
 	
 	
 	
+	
+	
 	private static const MAX_MASK_VALUE_LIMIT:Number = 0.55;
 	private static const MAX_MASK_ALPHA:Number = 1.0;
 	private static const MAX_VIEW_VALUE_LIMIT:Number = 0.585;
@@ -93,6 +95,9 @@ public class Entry_StateAA extends StateAA {
 	
 	private var _currTouch:Touch;
 	private var _showBottomFixed:Boolean;
+	
+	
+	
 	
 	
 	private function doMakeBg() : void {
@@ -276,6 +281,8 @@ public class Entry_StateAA extends StateAA {
 		if(!_showBottomFixed){
 			return;
 		}
+		
+		Axime.getWindow().getTouch().cancelAll();
 		
 		_showBottomFixed = false;
 		this.doHideBottom();
