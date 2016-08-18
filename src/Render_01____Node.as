@@ -17,8 +17,8 @@ public class Render_01____Node extends Sprite {
 		
 //		logger_A = new FlashTextLogger(stage, false, 80, 465, 400, true);
 //		isDebugger = true;
-		logger_A = new DebugLogger;
-		Axime.startup(1080, 1920, stage, Launcher_AA, logger_A, isDebugger);
+//		logger_A = new DebugLogger;
+		Axime.startup(1080, 1920, stage, Launcher_AA, logger_A, isDebugger, false);
 	}
 }
 }

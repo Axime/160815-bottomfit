@@ -25,7 +25,7 @@ public class Launcher_AA implements IAximeLauncher, IRootLauncher {
 		if(Multitouch.maxTouchPoints == 0){
 			return new DesktopPlatform(false);
 		}
-		return new MobilePlatform(false);
+		return new MobilePlatform(false, true);
 	}
 	
 	public function onLaunch() : void {
