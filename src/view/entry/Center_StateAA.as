@@ -30,6 +30,9 @@ public class Center_StateAA extends StateAA
 	
 	public static const MIDDLE_Y1:int = 346;
 	public static const MIDDLE_Y2:int = 451;
+	public static const DRAY_START_X:int = 166;
+	
+	
 	public static const BOTTOM_Y1:int = 742;
 	public static const BOTTOM_Y2:int = 963;
 	
@@ -124,10 +127,10 @@ public class Center_StateAA extends StateAA
 		_pb_A.setData(new <String>[
 			"common/slider/strip.png",
 			"common/slider/strip1.png"],1);
-		_pb_A.setBarStartOffset( -704, 0);
+		_pb_A.setBarStartOffset( -663, 0);
 //		pb_A.width = 600;
 		//		pb_A.height = 300;
-		_pb_A.clipRect = new Rectangle(1, 0, 704, 5);
+		_pb_A.clipRect = new Rectangle(1, 0, 663, 5);
 		
 		_pb_A.getRange().ratio = 0.6;
 		this.getFusion().addNode(_pb_A);
@@ -155,8 +158,8 @@ public class Center_StateAA extends StateAA
 			return false;
 		});
 		
-		_dragFN.x = 144 + 704 * 0.6;
-		_dragFN.y = MIDDLE_Y1 - 1;
+		_dragFN.x = DRAY_START_X + 663 * 0.6;
+		_dragFN.y = MIDDLE_Y1;
 		
 		_dragFN.addEventListener(NTouchEvent.PRESS, onStartDrag);
 		
@@ -269,14 +272,14 @@ public class Center_StateAA extends StateAA
 	}
 	
 	private function onStartDrag(e:NTouchEvent):void{
-		_dragFN.startDrag(e.touch, new Rectangle(144, MIDDLE_Y1 - 1, 704, 0));
+		_dragFN.startDrag(e.touch, new Rectangle(DRAY_START_X, MIDDLE_Y1, 663 - 11, 0));
 		
 		e.touch.addEventListener(AEvent.CHANGE, onDragChange);
 		e.touch.addEventListener(AEvent.COMPLETE, onDragComplete);
 	}
 	
 	private function onDragChange(e:AEvent):void{
-		_pb_A.getRange().ratio = (_dragFN.x - 144) / 704;
+		_pb_A.getRange().ratio = (_dragFN.x - DRAY_START_X) / (663 - 11);
 	}
 	
 	private function onDragComplete(e:AEvent):void{
