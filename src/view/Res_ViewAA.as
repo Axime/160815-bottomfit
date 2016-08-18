@@ -41,6 +41,7 @@ public class Res_ViewAA extends ViewAA {
 				"img/bgA.png", 
 				"img/tile_A.jpg",
 				"img/navi.png",
+				"img/splitBg.png",
 				
 				// text
 				"text/bluetooth.png",
@@ -70,6 +71,7 @@ public class Res_ViewAA extends ViewAA {
 			g_AM.addBundle(new FilesBundle(filenameList), new TextureAA_BundleHandler(1.0));
 			
 			filenameList = new <String>[
+				// top
 				"btn1/flashlight.png", 
 				"btn1/flashlight1.png",
 				
@@ -81,6 +83,20 @@ public class Res_ViewAA extends ViewAA {
 				
 				"btn1/screenshot.png", 
 				"btn1/screenshot1.png",
+				
+				"btn1/r_flashlight.png", 
+				"btn1/r_flashlight1.png",
+				
+				"btn1/r_calc.png", 
+				"btn1/r_calc1.png",
+				
+				"btn1/r_scan.png", 
+				"btn1/r_scan1.png",
+				
+				"btn1/r_screenshot.png", 
+				"btn1/r_screenshot1.png",
+				
+				// bottom
 				
 				"btn/WLAN.png", 
 				"btn/WLAN1.png",

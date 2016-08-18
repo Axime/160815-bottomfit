@@ -21,6 +21,15 @@ package view.comp
 			_isTextHoriz = isTextHoriz;
 		}
 		
+		
+		public function setTex(texA:String, texB:String):void{
+			_texA = texA;
+			_texB = texB;
+			
+			_img.textureId = "common/" + (_isSelected ? _texB : _texA);
+		}
+		
+		
 		override public function onEnter() : void{
 			_img = new ImageAA;
 			_img.textureId = "common/" + (_isSelected ? _texB : _texA);
@@ -39,11 +48,13 @@ package view.comp
 				
 				
 				if(_isTextHoriz){
-					_textImg.x = 94;
+					_textImg.x = 66;
 				}
 				else {
 					_textImg.y = 99;
 				}
+				
+				_textImg.touchable = false;
 			}
 			
 			

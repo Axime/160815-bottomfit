@@ -20,6 +20,7 @@ package view.entry {
 	import d2.axime.enum.ETouchMode;
 	import d2.axime.events.AEvent;
 	import d2.axime.events.AKeyboardEvent;
+	import d2.axime.events.NTouchEvent;
 	import d2.axime.gesture.GestureFacade;
 	import d2.axime.gesture.SwipeGestureRecognizer;
 	import d2.axime.window.Touch;
@@ -51,8 +52,15 @@ public class Entry_StateAA extends StateAA {
 		
 	}
 	
-	public function registerTouch(touch:Touch):void{
+	public function registerTouch(touch:Touch, tag:String):void{
 		_showBottomFixed = false;
+		
+		if(tag == "A" || tag == "B"){
+			MAX_VIEW_VALUE_LIMIT = 0.585;
+		}
+		else if(tag == "split"){
+			MAX_VIEW_VALUE_LIMIT = 1.0;
+		}
 		
 		_currTouch = touch;
 		_currTouch.addEventListener(AEvent.CHANGE, onTouchChanged);
@@ -67,6 +75,8 @@ public class Entry_StateAA extends StateAA {
 		this.doMakeMask();
 		this.doMakeHotspot();
 		
+		this.doMakeTool();
+		
 		Axime.getWindow().getKeyboard().getKey(Keyboard.BACK).addEventListener(AEvent.COMPLETE, ____onKey_Back);
 	}
 	
@@ -80,7 +90,8 @@ public class Entry_StateAA extends StateAA {
 	
 	private static const MAX_MASK_VALUE_LIMIT:Number = 0.55;
 	private static const MAX_MASK_ALPHA:Number = 1.0;
-	private static const MAX_VIEW_VALUE_LIMIT:Number = 0.585;
+	
+	public static var MAX_VIEW_VALUE_LIMIT:Number = 0.585;
 	
 	
 	private var _bg:ImageAA;
@@ -165,6 +176,27 @@ public class Entry_StateAA extends StateAA {
 		return img_A;
 	}
 	
+	private function doMakeTool():void{
+		var img:ImageAA;
+		
+		img = new ImageAA;
+		img.textureId = "common/img/frame.png";
+		this.getFusion().addNode(img);
+		
+		img.scaleX = 2.6;
+		img.scaleY = 2.6;
+		img.y = 50;
+		
+		img.addEventListener(NTouchEvent.CLICK, onSwitchStyle);
+		
+	}
+	
+	private function onSwitchStyle(e:NTouchEvent):void{
+		if(_centerState){
+			_centerState.switchStyle();
+		}
+	}
+	
 	private function onSwipe(e:AEvent):void{
 		var sg_A:SwipeGestureRecognizer;
 		var tag:String;
@@ -209,7 +241,7 @@ public class Entry_StateAA extends StateAA {
 			}
 			
 			
-			this.registerTouch(sg_A.getTouchList()[0]);
+			this.registerTouch(sg_A.getTouchList()[0], tag);
 		}
 		
 		

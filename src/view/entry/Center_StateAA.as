@@ -36,6 +36,26 @@ public class Center_StateAA extends StateAA
 //	public var max_drag:Number;
 //	public var min_drag:Number;
 	
+	
+	
+	public function switchStyle() : void {
+		
+		_isRectIcon = !_isRectIcon;
+		
+		if(_isRectIcon){
+			_topState1.setTex("btn1/r_flashlight.png", "btn1/r_flashlight1.png");
+			_topState2.setTex("btn1/r_calc.png", "btn1/r_calc1.png");
+			_topState3.setTex("btn1/r_scan.png", "btn1/r_scan1.png");
+			_topState4.setTex("btn1/r_screenshot.png", "btn1/r_screenshot1.png");
+		}
+		else {
+			_topState1.setTex("btn1/flashlight.png", "btn1/flashlight1.png");
+			_topState2.setTex("btn1/calc.png", "btn1/calc1.png");
+			_topState3.setTex("btn1/scan.png", "btn1/scan1.png");
+			_topState4.setTex("btn1/screenshot.png", "btn1/screenshot1.png");
+		}
+		
+	}
 
 	override public function onEnter():void {
 		var checkFN:StateFusionAA;
@@ -72,18 +92,22 @@ public class Center_StateAA extends StateAA
 		checkFN = doCreateBtn("btn1/flashlight.png", "btn1/flashlight1.png", "text/flashlight.png", true);
 		checkFN.x = 175;
 		checkFN.y = 115;
+		_topState1 = checkFN.getState() as Check_CompAA;
 		
 		checkFN = doCreateBtn("btn1/calc.png", "btn1/calc1.png", "text/calc.png");
 		checkFN.x = 175 + (Axime.getWindow().rootWidth - 350) / 3;
 		checkFN.y = 115;
+		_topState2 = checkFN.getState() as Check_CompAA;
 		
 		checkFN = doCreateBtn("btn1/scan.png", "btn1/scan1.png", "text/scan.png");
 		checkFN.x = 175 + (Axime.getWindow().rootWidth - 350) / 3 * 2;
 		checkFN.y = 115;
+		_topState3 = checkFN.getState() as Check_CompAA;
 		
 		checkFN = doCreateBtn("btn1/screenshot.png", "btn1/screenshot1.png", "text/screenshot.png");
 		checkFN.x = 175 + (Axime.getWindow().rootWidth - 350);
 		checkFN.y = 115;
+		_topState4 = checkFN.getState() as Check_CompAA;
 		
 		
 		
@@ -91,7 +115,7 @@ public class Center_StateAA extends StateAA
 		img = new ImageAA;
 		img.textureId = "common/slider/sun.png";
 		this.getFusion().addNode(img);
-		img.x = 53;
+		img.x = 85;
 		img.y = MIDDLE_Y1 - img.sourceHeight / 2;
 		
 		
@@ -107,7 +131,7 @@ public class Center_StateAA extends StateAA
 		
 		_pb_A.getRange().ratio = 0.6;
 		this.getFusion().addNode(_pb_A);
-		_pb_A.x = 144;
+		_pb_A.x = 160;
 		_pb_A.y = MIDDLE_Y1 - 1;
 		
 		
@@ -140,21 +164,21 @@ public class Center_StateAA extends StateAA
 		
 		// auto button
 		checkFN = doCreateBtn("slider/auto.png", "slider/auto1.png", "slider/text.png", false, true, true);
-		checkFN.x = Axime.getWindow().rootWidth - 180;
+		checkFN.x = Axime.getWindow().rootWidth - 212;
 		checkFN.y = MIDDLE_Y1;
 		
 		
 		
 		// middle
 		checkFN = doCreateBtn("btn2/projection.png", "btn2/projection1.png", null, false, false);
-		checkFN.x = 240 + 48;
+		checkFN.x = 491/2 + 48;
 		checkFN.y = 67 + MIDDLE_Y2;
 		
 		
 		
 		
 		checkFN = doCreateBtn("btn2/upload.png", "btn2/upload1.png", null, false, false);
-		checkFN.x = 240 + 48 + 480 + 24;
+		checkFN.x = 491 + 48 + 6 + 491/2;
 		checkFN.y = 67 + MIDDLE_Y2;
 		
 		
@@ -207,6 +231,12 @@ public class Center_StateAA extends StateAA
 	private var _dragFN:DragFusion;
 	private var _pb_A:ProgressBarAA;
 	
+	private var _isRectIcon:Boolean;
+	private var _topState1:Check_CompAA;
+	private var _topState2:Check_CompAA;
+	private var _topState3:Check_CompAA;
+	private var _topState4:Check_CompAA;
+	
 	
 	
 	private function doCreateBtn(texA:String, texB:String, texText:String = null, isSelected:Boolean = false, customTouch:Boolean = true, isTextHoriz:Boolean=false):StateFusionAA {
@@ -229,13 +259,13 @@ public class Center_StateAA extends StateAA
 		img_A.scaleX = Axime.getWindow().rootWidth / img_A.sourceWidth;
 		img_A.scaleY = ViewConfig.HOTSPOT_H2 / img_A.sourceHeight;
 		
-		img_A.y = -ViewConfig.HOTSPOT_H2 * 0.5;
+		img_A.y = -ViewConfig.HOTSPOT_H2 * 0.667;
 		
 		return img_A;
 	}
 	
 	private function onTouchPress(e:NTouchEvent):void{
-		_entryState.registerTouch(e.touch);
+		_entryState.registerTouch(e.touch, "A");
 	}
 	
 	private function onStartDrag(e:NTouchEvent):void{
