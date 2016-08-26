@@ -113,8 +113,11 @@ public class Res_ViewAA extends ViewAA {
 				"btn/rotate.png", 
 				"btn/rotate1.png",
 				
-				"btn/shock.png", 
-				"btn/shock1.png",
+//				"btn/shock.png", 
+//				"btn/shock1.png",
+				
+				"btn/split.png", 
+				"btn/split1.png",
 				
 				"btn/mute.png", 
 				"btn/mute1.png",

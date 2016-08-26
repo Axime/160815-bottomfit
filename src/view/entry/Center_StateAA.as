@@ -48,14 +48,14 @@ public class Center_StateAA extends StateAA
 		if(_isRectIcon){
 			_topState1.setTex("btn1/r_flashlight.png", "btn1/r_flashlight1.png");
 			_topState2.setTex("btn1/r_calc.png", "btn1/r_calc1.png");
-			_topState3.setTex("btn1/r_scan.png", "btn1/r_scan1.png");
-			_topState4.setTex("btn1/r_screenshot.png", "btn1/r_screenshot1.png");
+			_topState3.setTex("btn1/r_screenshot.png", "btn1/r_screenshot1.png");
+			_topState4.setTex("btn1/r_scan.png", "btn1/r_scan1.png");
 		}
 		else {
 			_topState1.setTex("btn1/flashlight.png", "btn1/flashlight1.png");
 			_topState2.setTex("btn1/calc.png", "btn1/calc1.png");
-			_topState3.setTex("btn1/scan.png", "btn1/scan1.png");
-			_topState4.setTex("btn1/screenshot.png", "btn1/screenshot1.png");
+			_topState3.setTex("btn1/screenshot.png", "btn1/screenshot1.png");
+			_topState4.setTex("btn1/scan.png", "btn1/scan1.png");
 		}
 		
 	}
@@ -102,12 +102,12 @@ public class Center_StateAA extends StateAA
 		checkFN.y = 115;
 		_topState2 = checkFN.getState() as Check_CompAA;
 		
-		checkFN = doCreateBtn("btn1/scan.png", "btn1/scan1.png", "text/scan.png");
+		checkFN = doCreateBtn("btn1/screenshot.png", "btn1/screenshot1.png", "text/screenshot.png");
 		checkFN.x = 175 + (Axime.getWindow().rootWidth - 350) / 3 * 2;
 		checkFN.y = 115;
 		_topState3 = checkFN.getState() as Check_CompAA;
 		
-		checkFN = doCreateBtn("btn1/screenshot.png", "btn1/screenshot1.png", "text/screenshot.png");
+		checkFN = doCreateBtn("btn1/scan.png", "btn1/scan1.png", "text/scan.png");
 		checkFN.x = 175 + (Axime.getWindow().rootWidth - 350);
 		checkFN.y = 115;
 		_topState4 = checkFN.getState() as Check_CompAA;
@@ -204,11 +204,14 @@ public class Center_StateAA extends StateAA
 		checkFN.y = BOTTOM_Y1;
 		
 		// bottom2
-		checkFN = doCreateBtn("btn/rotate.png", "btn/rotate1.png", "text/rotate.png", true);
+		checkFN = doCreateBtn("btn/split.png", "btn/split1.png", "text/shock.png");
 		checkFN.x = 175;
 		checkFN.y = BOTTOM_Y2;
+		// 点击切换分屏
+//		checkFN.addEventListener(
 		
-		checkFN = doCreateBtn("btn/shock.png", "btn/shock1.png", "text/shock.png");
+		
+		checkFN = doCreateBtn("btn/rotate.png", "btn/rotate1.png", "text/rotate.png", true);
 		checkFN.x = 175 + (Axime.getWindow().rootWidth - 350) / 3;
 		checkFN.y = BOTTOM_Y2;
 		
@@ -240,6 +243,7 @@ public class Center_StateAA extends StateAA
 	private var _topState3:Check_CompAA;
 	private var _topState4:Check_CompAA;
 	
+//	private var _bg:ImageAA;
 	
 	
 	private function doCreateBtn(texA:String, texB:String, texText:String = null, isSelected:Boolean = false, customTouch:Boolean = true, isTextHoriz:Boolean=false):StateFusionAA {
@@ -254,15 +258,19 @@ public class Center_StateAA extends StateAA
 	
 	private function doCreateHotspot() : ImageAA {
 		var img_A:ImageAA;
+		var hotspot_h:Number;
 		
 		img_A = new ImageAA
 		img_A.textureId = "common/img/frame.png";
 		_hotspotFN.addNode(img_A);
 		
 		img_A.scaleX = Axime.getWindow().rootWidth / img_A.sourceWidth;
-		img_A.scaleY = ViewConfig.HOTSPOT_H2 / img_A.sourceHeight;
+		hotspot_h = Axime.getWindow().rootHeight * (1 - Entry_StateAA.MAX_VIEW_VALUE_LIMIT) + 90;
+//		img_A.scaleY = ViewConfig.HOTSPOT_H2 / img_A.sourceHeight;
+		img_A.scaleY = hotspot_h / img_A.sourceHeight;
+//		img_A.y = -ViewConfig.HOTSPOT_H2 * 0.667;
+		img_A.y = 90-hotspot_h;
 		
-		img_A.y = -ViewConfig.HOTSPOT_H2 * 0.667;
 		
 		return img_A;
 	}

@@ -43,8 +43,8 @@ public class Entry_StateAA extends StateAA {
 		}
 		
 		if(v > MAX_VIEW_VALUE_LIMIT){
-			//trace(v);
-			_currStateFN.y = Axime.getWindow().rootHeight * ((1-MAX_VIEW_VALUE_LIMIT) - (v-MAX_VIEW_VALUE_LIMIT)*0.55);
+
+			_currStateFN.y = Axime.getWindow().rootHeight * ((1-MAX_VIEW_VALUE_LIMIT) - (v-MAX_VIEW_VALUE_LIMIT)*0.40);
 		}
 		else {
 			_currStateFN.y = Axime.getWindow().rootHeight * (1-v);
@@ -213,7 +213,7 @@ public class Entry_StateAA extends StateAA {
 					_centerFN = new StateFusionAA;
 					_centerFN.setState(new Center_StateAA(this));
 					_centerState = _centerFN.getState() as Center_StateAA;
-					this.getFusion().addNode(_centerFN);
+					this.getFusion().addNodeAt(_centerFN, -2);
 					
 					_centerFN.y = Axime.getWindow().rootHeight;
 					
@@ -229,7 +229,7 @@ public class Entry_StateAA extends StateAA {
 					_splitFN = new StateFusionAA;
 					_splitFN.setState(new Split_StateAA(this));
 					_splitState = _splitFN.getState() as Split_StateAA;
-					this.getFusion().addNode(_splitFN);
+					this.getFusion().addNodeAt(_splitFN, -2);
 					
 					_splitFN.y = Axime.getWindow().rootHeight;
 					
