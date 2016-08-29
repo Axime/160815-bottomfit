@@ -67,6 +67,17 @@ public class Entry_StateAA extends StateAA {
 		_currTouch.addEventListener(AEvent.COMPLETE, onTouchComplete);
 	}
 	
+	public function showSplit():void{
+		this.doHideBottom(function():void{
+			doMakeSplit();
+			
+			MAX_VIEW_VALUE_LIMIT = 1.0;
+			_currTouch = null;
+			onTouchComplete(null);
+		});
+
+	}
+	
 	override public function onEnter() : void {
 		Axime.getWindow().getTouch().touchMode = ETouchMode.SINGLE;
 		Axime.getWindow().getTouch().velocityEnabled = true;
@@ -146,7 +157,8 @@ public class Entry_StateAA extends StateAA {
 		img_B = doCreateHotspot("B");
 		img_B.x = Axime.getWindow().rootWidth * 2/3;
 		
-		img_split = doCreateHotspot("split");
+//		img_split = doCreateHotspot("split");
+		img_split = doCreateHotspot("A");
 		img_split.x = Axime.getWindow().rootWidth /3;
 	}
 	
@@ -225,19 +237,7 @@ public class Entry_StateAA extends StateAA {
 			}
 				// 分屏
 			else if(tag == "split"){
-				if(!_splitFN){
-					_splitFN = new StateFusionAA;
-					_splitFN.setState(new Split_StateAA(this));
-					_splitState = _splitFN.getState() as Split_StateAA;
-					this.getFusion().addNodeAt(_splitFN, -2);
-					
-					_splitFN.y = Axime.getWindow().rootHeight;
-					
-				}
-				else {
-					_splitFN.visible = _splitFN.touchable = true;
-				}
-				_currStateFN = _splitFN;
+				this.doMakeSplit();
 			}
 			
 			
@@ -245,6 +245,22 @@ public class Entry_StateAA extends StateAA {
 		}
 		
 		
+	}
+	
+	private function doMakeSplit():void{
+		if(!_splitFN){
+			_splitFN = new StateFusionAA;
+			_splitFN.setState(new Split_StateAA(this));
+			_splitState = _splitFN.getState() as Split_StateAA;
+			this.getFusion().addNodeAt(_splitFN, -2);
+			
+			_splitFN.y = Axime.getWindow().rootHeight;
+			
+		}
+		else {
+			_splitFN.visible = _splitFN.touchable = true;
+		}
+		_currStateFN = _splitFN;
 	}
 	
 	private function onTouchChanged(e:AEvent):void{
@@ -261,7 +277,7 @@ public class Entry_StateAA extends StateAA {
 		Axime.getWindow().getTouch().touchEnabled = false;
 		
 		// 向下
-		if(_currTouch.velocityY > 0){
+		if(_currTouch && _currTouch.velocityY > 0){
 			this.doHideBottom();
 		}
 		
@@ -295,7 +311,7 @@ public class Entry_StateAA extends StateAA {
 		
 	}
 	
-	private function doHideBottom() : void{
+	private function doHideBottom( onComplete:Function = null ) : void{
 		var tween:ATween;
 		
 		tween = TweenMachine.to(this, (_value + 1) * 0.15, {value:0});
@@ -305,6 +321,10 @@ public class Entry_StateAA extends StateAA {
 		tween.onComplete = function() :void{
 			Axime.getWindow().getTouch().touchEnabled = true;
 			_currStateFN.touchable = _currStateFN.visible = false;
+			
+			if(onComplete!=null){
+				onComplete();
+			}
 		}
 
 	}

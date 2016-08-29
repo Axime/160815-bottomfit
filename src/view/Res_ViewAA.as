@@ -54,7 +54,8 @@ public class Res_ViewAA extends ViewAA {
 				"text/rotate.png",
 				"text/scan.png",
 				"text/screenshot.png",
-				"text/shock.png",
+//				"text/shock.png",
+				"text/split.png",
 				"text/WLAN.png",
 				
 				// slider

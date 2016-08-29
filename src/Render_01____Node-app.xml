@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <application xmlns="http://ns.adobe.com/air/application/22.0">
-	<id>demo</id>
-	<filename>控制中心demo</filename>
-	<name>控制中心demo</name>
-	<versionNumber>1.0.0</versionNumber>
+	<id>demo1.1</id>
+	<filename>控制中心d2</filename>
+	<name>控制中心d2</name>
+	<versionNumber>1.1.0</versionNumber>
 	
 	<initialWindow>
 		<content>[This value will be overwritten by Flash Builder in the output app.xml]</content>

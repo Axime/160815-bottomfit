@@ -204,11 +204,17 @@ public class Center_StateAA extends StateAA
 		checkFN.y = BOTTOM_Y1;
 		
 		// bottom2
-		checkFN = doCreateBtn("btn/split.png", "btn/split1.png", "text/shock.png");
+		checkFN = doCreateBtn("btn/split.png", "btn/split1.png", "text/split.png");
 		checkFN.x = 175;
 		checkFN.y = BOTTOM_Y2;
 		// 点击切换分屏
 //		checkFN.addEventListener(
+		(checkFN.getState() as Check_CompAA).setCallback(function() :void{
+//			Axime.getLog().simplify("select...");
+			
+			
+			_entryState.showSplit();
+		});
 		
 		
 		checkFN = doCreateBtn("btn/rotate.png", "btn/rotate1.png", "text/rotate.png", true);

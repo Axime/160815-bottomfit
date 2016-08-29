@@ -29,6 +29,10 @@ package view.comp
 			_img.textureId = "common/" + (_isSelected ? _texB : _texA);
 		}
 		
+		public function setCallback( callback:Function ) : void {
+			_callback = callback;
+		}
+		
 		
 		override public function onEnter() : void{
 			_img = new ImageAA;
@@ -76,6 +80,7 @@ package view.comp
 		private var _touch:Touch;
 		private var _customTouch:Boolean;
 		private var _isTextHoriz:Boolean;
+		private var _callback:Function;
 		
 		
 		
@@ -98,7 +103,20 @@ package view.comp
 		}
 		
 		private function onTouchComplete(e:AEvent):void{
-			_isSelected = (_img.textureId == ("common/" + _texB));
+			var b:Boolean;
+			
+			b = (_img.textureId == ("common/" + _texB));
+			if(_isSelected == b){
+				return;
+			}
+			_isSelected = b;
+			
+			if(_isSelected && _callback !=null){
+				_isSelected = false;
+				_img.textureId = "common/" + _texA;
+				_callback();
+				
+			}
 		}
 		
 		private function doUpdateStatus() : void{
