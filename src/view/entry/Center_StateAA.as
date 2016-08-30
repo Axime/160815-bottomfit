@@ -3,6 +3,7 @@ package view.entry
 	import flash.geom.Rectangle;
 	
 	import d2.axime.Axime;
+	import d2.axime.animate.DelayMachine;
 	import d2.axime.animate.TweenMachine;
 	import d2.axime.display.FusionAA;
 	import d2.axime.display.ImageAA;
@@ -63,23 +64,21 @@ public class Center_StateAA extends StateAA
 	override public function onEnter():void {
 		var checkFN:StateFusionAA;
 		var img:ImageAA;
+		var bg:ImageAA;
 		
-		
+		//bgFN = new FusionAA;
 		
 		// bg
-		img = new ImageAA;
-		img.textureId = "common/img/bgA.png";
-		this.getFusion().addNode(img);
+		bg = new ImageAA;
+		bg.textureId = "common/img/bgA.png";
+		this.getFusion().addNode(bg);
 		
 		img = new ImageAA;
 		img.textureId = "common/img/navi.png";
 		this.getFusion().addNode(img);
 		img.x = (Axime.getWindow().rootWidth - img.sourceWidth)/2;
 		img.y = 12;
-		
-//		_s9img.width = Axime.getWindow().rootWidth;
-//		_s9img.height = Axime.getWindow().rootHeight;
-		
+		img.touchable = false;
 		
 		// hotspot
 		_hotspotFN = new FusionAA;
@@ -88,8 +87,7 @@ public class Center_StateAA extends StateAA
 		
 		this.doCreateHotspot();
 		_hotspotFN.addEventListener(NTouchEvent.PRESS, onTouchPress);
-		
-		
+		bg.addEventListener(NTouchEvent.PRESS, onTouchPress);
 		
 		// top
 		checkFN = doCreateBtn("btn1/flashlight.png", "btn1/flashlight1.png", "text/flashlight.png", true);
@@ -209,9 +207,13 @@ public class Center_StateAA extends StateAA
 		checkFN.y = BOTTOM_Y2;
 
 		
-//		(checkFN.getState() as Check_CompAA).setCallback(function() :void{
-//			_entryState.showSplit();
-//		});
+		if(ViewConfig.version == ViewConfig.v2){
+			(checkFN.getState() as Check_CompAA).setCallback(function() :void{
+				_entryState.showSplit();
+			});
+			
+			
+		}
 		
 		
 		checkFN = doCreateBtn("btn/rotate.png", "btn/rotate1.png", "text/rotate.png", true);
@@ -234,7 +236,6 @@ public class Center_StateAA extends StateAA
 	}
 	
 	
-	
 	private var _hotspotFN:FusionAA;
 	private var _entryState:Entry_StateAA;
 	private var _dragFN:DragFusion;
@@ -245,6 +246,7 @@ public class Center_StateAA extends StateAA
 	private var _topState2:Check_CompAA;
 	private var _topState3:Check_CompAA;
 	private var _topState4:Check_CompAA;
+	
 	
 //	private var _bg:ImageAA;
 	
@@ -280,6 +282,10 @@ public class Center_StateAA extends StateAA
 	
 	private function onTouchPress(e:NTouchEvent):void{
 		_entryState.registerTouch(e.touch, "A");
+		
+		_entryState.isTouchMoved = false;
+		
+
 	}
 	
 	private function onStartDrag(e:NTouchEvent):void{
@@ -290,6 +296,7 @@ public class Center_StateAA extends StateAA
 	}
 	
 	private function onDragChange(e:AEvent):void{
+		_entryState.isTouchMoved = true;
 		_pb_A.getRange().ratio = (_dragFN.x - DRAY_START_X) / (663 - 11);
 	}
 	

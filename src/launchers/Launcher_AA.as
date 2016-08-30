@@ -59,6 +59,7 @@ public class Launcher_AA implements IAximeLauncher, IRootLauncher {
 		
 //		AAFacade.setAntiAlias(16);
 		_rootA = root;
+		
 		coreRes = Res_ViewAA.getRes();
 		resView = new Res_ViewAA(coreRes, function() : void {
 			root.addView(new Entry_ViewAA);

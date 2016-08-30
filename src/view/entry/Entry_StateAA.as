@@ -16,6 +16,7 @@ package view.entry {
 	import d2.axime.display.ImageAA;
 	import d2.axime.display.StateAA;
 	import d2.axime.display.StateFusionAA;
+	import d2.axime.display.core.NodeAA;
 	import d2.axime.enum.EDirection;
 	import d2.axime.enum.ETouchMode;
 	import d2.axime.events.AEvent;
@@ -53,7 +54,7 @@ public class Entry_StateAA extends StateAA {
 	}
 	
 	public function registerTouch(touch:Touch, tag:String):void{
-		_showBottomFixed = false;
+//		_showBottomFixed = false;
 		
 		if(tag == "A" || tag == "B"){
 			MAX_VIEW_VALUE_LIMIT = 0.585;
@@ -63,19 +64,28 @@ public class Entry_StateAA extends StateAA {
 		}
 		
 		_currTouch = touch;
-		_currTouch.addEventListener(AEvent.CHANGE, onTouchChanged);
+		_currTouch.addEventListener(AEvent.CHANGE,   onTouchChanged);
 		_currTouch.addEventListener(AEvent.COMPLETE, onTouchComplete);
 	}
+	
+//	public function registerHotspot(hs:NodeAA):void{
+//		hs.addEventListener(NTouchEvent.CLICK, onClickHotspot);
+//	}
 	
 	public function showSplit():void{
 		this.doHideBottom(function():void{
 			doMakeSplit();
 			
 			MAX_VIEW_VALUE_LIMIT = 1.0;
+			
 			_currTouch = null;
 			onTouchComplete(null);
 		});
 
+	}
+	
+	public function hideBottom():void{
+		this.doHideBottom();
 	}
 	
 	override public function onEnter() : void {
@@ -97,6 +107,8 @@ public class Entry_StateAA extends StateAA {
 	
 	
 	
+	
+	public var isTouchMoved:Boolean;
 	
 	
 	private static const MAX_MASK_VALUE_LIMIT:Number = 0.55;
@@ -121,6 +133,14 @@ public class Entry_StateAA extends StateAA {
 	
 	
 	
+	
+	private function onClickHotspot(e:NTouchEvent):void{
+//		if(!isTouchMoved){
+//			this.hideBottom();
+//		}
+		
+		//trace("B");
+	}
 	
 	private function doMakeBg() : void {
 		_bg = new ImageAA;
@@ -157,8 +177,13 @@ public class Entry_StateAA extends StateAA {
 		img_B = doCreateHotspot("B");
 		img_B.x = Axime.getWindow().rootWidth * 2/3;
 		
-		img_split = doCreateHotspot("split");
-//		img_split = doCreateHotspot("A");
+		if(ViewConfig.version == ViewConfig.v1){
+			img_split = doCreateHotspot("split");
+		}
+		else {
+			img_split = doCreateHotspot("A");
+		}
+		
 		img_split.x = Axime.getWindow().rootWidth /3;
 	}
 	
@@ -266,6 +291,7 @@ public class Entry_StateAA extends StateAA {
 	
 	private function onTouchChanged(e:AEvent):void{
 //		Axime.getLog().simplify("touch: {0} | {1}", _currTouch.rootX, _currTouch.rootY);
+		_showBottomFixed = false;
 		
 		this.doUpdateTouch(_currTouch);
 	}
@@ -273,12 +299,20 @@ public class Entry_StateAA extends StateAA {
 	private function onTouchComplete(e:AEvent):void{
 		var tween:ATween;
 		
+//		if(!isTouchMoved){
+//			return;
+//		}
+		
+//		trace("A");
 //		trace(_currTouch.velocityY);
 		
 		Axime.getWindow().getTouch().touchEnabled = false;
 		
+		if(_showBottomFixed ){
+			doHideBottom();
+		}
 		// 向下
-		if(_currTouch && _currTouch.velocityY > 0){
+		else if(_currTouch && _currTouch.velocityY > 0){
 			this.doHideBottom();
 		}
 		
@@ -322,6 +356,8 @@ public class Entry_StateAA extends StateAA {
 		tween.onComplete = function() :void{
 			Axime.getWindow().getTouch().touchEnabled = true;
 			_currStateFN.touchable = _currStateFN.visible = false;
+			
+			_showBottomFixed = false;
 			
 			if(onComplete!=null){
 				onComplete();
