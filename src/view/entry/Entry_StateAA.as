@@ -157,8 +157,8 @@ public class Entry_StateAA extends StateAA {
 		img_B = doCreateHotspot("B");
 		img_B.x = Axime.getWindow().rootWidth * 2/3;
 		
-//		img_split = doCreateHotspot("split");
-		img_split = doCreateHotspot("A");
+		img_split = doCreateHotspot("split");
+//		img_split = doCreateHotspot("A");
 		img_split.x = Axime.getWindow().rootWidth /3;
 	}
 	
@@ -219,6 +219,8 @@ public class Entry_StateAA extends StateAA {
 		if(sg_A.getDirection() == EDirection.UP){
 			Axime.getLog().simplify("swipe: {0}", tag);
 			
+			this.registerTouch(sg_A.getTouchList()[0], tag);
+			
 			// 应用中心
 			if(tag == "A" || tag == "B") {
 				if(!_centerFN){
@@ -241,7 +243,6 @@ public class Entry_StateAA extends StateAA {
 			}
 			
 			
-			this.registerTouch(sg_A.getTouchList()[0], tag);
 		}
 		
 		
